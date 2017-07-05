@@ -10,13 +10,18 @@ name_station <- "Name of the weather station"  # For labeling only
 time_difference <- "+ 6h"                      # Difference to UTC (h)
 
 # Coordinates of the respective field station 
-# (decimal degrees)
+# (lon/lat, decimal degrees)
 x_coordinate <- 12.34    
 y_coordinate <- 56.78
 
 # Station data path and filenames
 station_PATH <- "/path/to/station_data/"
 station_data_file <- "your_station_data" 
+
+# Staion T data should be in csv format:
+# Datetime, value
+# YYYY-MM-DD hh:mm:ss,float, e.g.
+# 2014-09-29 08:34:00,20.14
 
 
 ###############################
