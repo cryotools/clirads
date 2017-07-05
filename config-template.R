@@ -1,7 +1,16 @@
 # Configuration file for the temperature downscaling script
 # Edit according to your local setup, the safe (an rename for each study area / dataset).
 # Finally, change first row in the main file to load configuration form this file.
+#
+# See README for further information.
 
+###############################
+# General setup               #
+###############################
+
+# Work directory (local HD recommended for performance)
+wd_PATH <- "/path/to/processing-directory"
+  
 ###############################
 # Weather station information #
 ###############################
@@ -15,7 +24,7 @@ x_coordinate <- 12.34
 y_coordinate <- 56.78
 
 # Station data path and filenames
-station_PATH <- "/path/to/station_data/"
+station_PATH <- "/path/to/station_data"         # No tailing '/'
 station_data_file <- "your_station_data" 
 
 # Staion T data should be in csv format:
@@ -29,7 +38,7 @@ station_data_file <- "your_station_data"
 ###############################
 
 # ERA data path and filenames
-ERA_PATH <- "/path/to/ERA_data/"
+ERA_PATH <- "/path/to/ERA_data"                 # No tailing '/'
 
 # ERA data should provided in netCDF format
 # Convert using grib2netcdf

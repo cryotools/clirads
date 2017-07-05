@@ -1,38 +1,32 @@
-#' Tools to downscale ERA data basing on climate station measurements
-#'
-#' Put description here
-#'
-#' \tabular{ll}{ Package: \tab Luminescence\cr Type: \tab Package\cr Version:
-#' \tab 0.1 \cr Date: \tab 2017-07-05 \cr License: \tab GPL-3\cr }
-#'
-#' @name Climate-reanalysis-downscaling
-#' @docType package
-#' @author \bold{Full list of authors and contributors} (alphabetic order)
-#'
-#' \tabular{ll}{
-#' Lars Gerlitz \tab GFZ Potsdam, Germany \cr
-#' David Loibl \tab Humboldt University, Germany \cr
-#' Anika Pinzer \tab Uppsala University, Sweden \cr
-#' }
-#'
-#' \bold{Acknowledgement}
-#'
-#' GFZ Potsdam; Geo.X / MORSANAT project
-#'
-#' @references to be prepared
-#'
-NULL
+#
+# Tool to downscale ERA temperature data basing on climate station measurements
+#
+# Version 0.1
+# 2017-07-05
+#
+# Authors
+# Lars Gerlitz (GFZ Potsdam, Germany)
+# David Loibl (Humboldt University, Germany)
+# Anika Pinzer (Uppsala, Sweden)
+#
+# Acknoledgements
+# GFZ Potsdam; Geo.X / MORSANAT project
+#
+# References
+# To be prepared
+#
+# License: GPL3 (?)
 
 
 # Read configuration from file (full path + filename - EDIT MANUALLY)
-source("/home/loibldav/Git/downscaling/maidan-config.R")
+source("/home/loibldav/Git/climra-downscaling/maidanvalley-config.R")
 
 # Load packages
 library(sp)
 library(raster)
 library(ncdf4)
 
-setwd(station_PATH)
+setwd(wd_PATH)
 
 SpatialPoints(cbind(x_coordinate,y_coordinate)) 
 
@@ -44,7 +38,7 @@ SpatialPoints(cbind(x_coordinate,y_coordinate))
 preprocess_ERA <- function(ERA_PATH, ERA_FILE, x_coordinate, y_coordinate, column_title) {
   
   # Read ERA data
-  ERA_data<-brick(paste(ERA_PATH,ERA_FILE,sep=""))
+  ERA_data<-brick(paste(ERA_PATH,ERA_FILE,sep="/"))
   
   # Extract ERA data for station location
   ERA_data_ext <- extract(ERA_data,SpatialPoints(cbind(x_coordinate,y_coordinate)))
@@ -147,7 +141,7 @@ plot_HC <- function(input_data, norm_input_data, station_data, graphtitle, legen
 # Data available at: http://sdss.caiag.kg/sdss/
 ##############################################################################################################################
 
-temperature <- read.table(station_data_file, sep=",", dec=".", header=T)  
+temperature <- read.table(paste(station_PATH, station_data_file, sep="/"), sep=",", dec=".", header=T)  
 
 # Convert date to numeric format & create new data frame
 year <- as.numeric(substr(temperature[,1],1,4))
@@ -317,11 +311,10 @@ data_all_norm_H_6h <- normalize_HC(data_all_H_6h, data_all_6)
 data_all_norm_H_12h <- normalize_HC(data_all_H_12h, data_all_12)
 data_all_norm_H_18h <- normalize_HC(data_all_H_18h, data_all_18)
 
-###data_all_norm_H_0h_date<- data_all_norm_H_0h[,1:4]
-###data_all_norm_H_6h_date<- data_all_norm_H_6h[,1:4]
-###data_all_norm_H_12h_date<- data_all_norm_H_12h[,1:4]
-###data_all_norm_H_18h_date<- data_all_norm_H_18h[,1:4]
-
+data_all_norm_H_0h_date<- data_all_norm_H_0h[,1:4]
+data_all_norm_H_6h_date<- data_all_norm_H_6h[,1:4]
+data_all_norm_H_12h_date<- data_all_norm_H_12h[,1:4]
+data_all_norm_H_18h_date<- data_all_norm_H_18h[,1:4]
 
 # Predict past temperatures on basis of ERA-Interim temperatures
 results_0h_H <- predict(rg0, newdata=data_all_norm_H_0h) # only predictors
